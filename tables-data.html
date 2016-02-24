@@ -1789,6 +1789,40 @@ Purchase: http://wrapbootstrap.com
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-12">
+                            <div class="widget">
+                                <div class="widget-header bordered-bottom bordered-yellow">
+                                    <span class="widget-caption">JSONP data source for remote domains(JSONP数据源为远程域)</span>
+                                    <div class="widget-buttons">
+                                        <a href="#" data-toggle="maximize">
+                                            <i class="fa fa-expand"></i>
+                                        </a>
+                                        <a href="#" data-toggle="collapse">
+                                            <i class="fa fa-minus"></i>
+                                        </a>
+                                        <a href="#" data-toggle="dispose">
+                                            <i class="fa fa-times"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="widget-body no-padding">
+                                    <table class="table table-bordered table-hover table-striped" id="jsonpdatatable">
+                                        <thead class="bordered-darkorange">
+                                        <tr role="row">
+                                            <th>First name</th>
+                                            <th>Last name</th>
+                                            <th>Position</th>
+                                            <th>Office</th>
+                                            <th>Start date</th>
+                                            <th>Salary</th>
+                                        </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <!-- /Page Body -->
             </div>
@@ -1817,6 +1851,7 @@ Purchase: http://wrapbootstrap.com
         InitiateEditableDataTable.init();
         InitiateExpandableDataTable.init();
         InitiateSearchableDataTable.init();
+        InitiateJsonPDataTable.init();
     </script>
     <!--Google Analytics::Demo Only-->
     <script>

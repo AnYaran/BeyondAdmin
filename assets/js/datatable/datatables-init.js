@@ -9,7 +9,7 @@ var InitiateSimpleDataTable = function () {
                     "aButtons": [
                         "copy", "csv", "xls", "pdf", "print"
                     ],
-                    "sSwfPath": "assets/swf/copy_csv_xls_pdf.swf"
+                    "sSwfPath": "assets/js/datatable/assets/swf/copy_csv_xls_pdf.swf"
                 },
                 "language": {
                     "search": "",
@@ -74,7 +74,7 @@ var InitiateEditableDataTable = function () {
 				            "sButtonText": "Save <i class=\"fa fa-angle-down\"></i>",
 				            "aButtons": ["csv", "xls", "pdf"]
 				        }],
-                    "sSwfPath": "assets/swf/copy_csv_xls_pdf.swf"
+                    "sSwfPath": "assets/js/datatable/assets/swf/copy_csv_xls_pdf.swf"
                 },
                 "language": {
                     "search": "",
@@ -257,7 +257,7 @@ var InitiateExpandableDataTable = function () {
 				            "sButtonText": "Save <i class=\"fa fa-angle-down\"></i>",
 				            "aButtons": ["csv", "xls", "pdf"]
 				        }],
-                    "sSwfPath": "assets/swf/copy_csv_xls_pdf.swf"
+                    "sSwfPath": "assets/js/datatable/assets/swf/copy_csv_xls_pdf.swf"
                 },
                 "language": {
                     "search": "",
@@ -316,7 +316,7 @@ var InitiateSearchableDataTable = function () {
 				            "sButtonText": "Save <i class=\"fa fa-angle-down\"></i>",
 				            "aButtons": ["csv", "xls", "pdf"]
 				        }],
-                    "sSwfPath": "assets/swf/copy_csv_xls_pdf.swf"
+                    "sSwfPath": "assets/js/datatable/assets/swf/copy_csv_xls_pdf.swf"
                 },
                 "language": {
                     "search": "",
@@ -333,6 +333,30 @@ var InitiateSearchableDataTable = function () {
                 oTable.fnFilter(this.value, $("tfoot input").index(this));
             });
 
+        }
+    }
+}();
+var InitiateJsonPDataTable = function () {
+    return {
+        init: function(){
+            var oTable = $('#jsonpdatatable').dataTable({
+                "sDom": "Tflrt<'row DTTTFooter'<'col-sm-6'i><'col-sm-6'p>>",
+                "oTableTools": {
+                    "aButtons": [
+                        "copy", "csv", "xls", "pdf", "print"
+                    ],
+                    "sSwfPath": "assets/js/datatable/assets/swf/copy_csv_xls_pdf.swf"
+                },
+                "language": {
+                    "url": "assets/js/datatable/assets/i18n/Chinese.json"
+                },
+                "processing": true,
+                "serverSide": true,
+                "ajax": {
+                    "url": "http://datatables.net/examples/server_side/scripts/jsonp.php",
+                    "dataType": "jsonp"
+                }
+            })
         }
     }
 }();
