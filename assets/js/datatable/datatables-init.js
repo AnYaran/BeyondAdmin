@@ -355,7 +355,12 @@ var InitiateJsonPDataTable = function () {
                 "ajax": {
                     "url": "http://datatables.net/examples/server_side/scripts/jsonp.php",
                     "dataType": "jsonp"
-                }
+                },
+                "columnDefs": [{
+                    "targets": -1,
+                    "data": null,
+                    "defaultContent": ' <a href="#" class="btn btn-info btn-xs edit"><i class="fa fa-edit"></i> 编辑</a> <a href="#" class="btn btn-danger btn-xs delete"><i class="fa fa-trash-o"></i> 删除</a>'
+                }]
             })
         }
     }
