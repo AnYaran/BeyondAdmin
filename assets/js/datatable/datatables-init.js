@@ -74,7 +74,7 @@ var InitiateEditableDataTable = function () {
 				            "sButtonText": "Save <i class=\"fa fa-angle-down\"></i>",
 				            "aButtons": ["csv", "xls", "pdf"]
 				        }],
-                    "sSwfPath": "assets/js/datatable/assets/swf/copy_csv_xls_pdf.swf"
+                    "sSwfPath": "./assets/js/datatable/assets/swf/copy_csv_xls_pdf.swf"
                 },
                 "language": {
                     "search": "",
@@ -339,12 +339,24 @@ var InitiateSearchableDataTable = function () {
 var InitiateJsonPDataTable = function () {
     return {
         init: function(){
-            var oTable = $('#jsonpdatatable').dataTable({
-                "sDom": "Tflrt<'row DTTTFooter'<'col-sm-6'i><'col-sm-6'p>>",
-                "oTableTools": {
+            var oTable = $('#jsonpdatatable').DataTable({
+                "autoWidth": false,
+                "dom": "Tflrt<'row DTTTFooter'<'col-sm-12'p<'pull-right margin-right-10'i>>>",
+                tableTools: {
                     "aButtons": [
-                        "copy", "csv", "xls", "pdf", "print"
-                    ],
+                        {
+                            "sExtends": "copy",
+                            "sButtonText": "复制到剪贴板"
+                        },
+                        {
+                            "sExtends": "print",
+                            "sButtonText": "打印预览"
+                        },
+                        {
+                            "sExtends": "collection",
+                            "sButtonText": "保存为 <i class=\"fa fa-angle-down\"></i>",
+                            "aButtons": ["csv", "xls", "pdf"]
+                        }],
                     "sSwfPath": "assets/js/datatable/assets/swf/copy_csv_xls_pdf.swf"
                 },
                 "language": {
@@ -356,12 +368,123 @@ var InitiateJsonPDataTable = function () {
                     "url": "http://datatables.net/examples/server_side/scripts/jsonp.php",
                     "dataType": "jsonp"
                 },
-                "columnDefs": [{
-                    "targets": -1,
-                    "data": null,
-                    "defaultContent": ' <a href="#" class="btn btn-info btn-xs edit"><i class="fa fa-edit"></i> 编辑</a> <a href="#" class="btn btn-danger btn-xs delete"><i class="fa fa-trash-o"></i> 删除</a>'
-                }]
-            })
+                //当处理大数据时，延迟渲染数据，有效提高Datatables处理能力
+                "deferRender": true,
+                columns: [
+                    {"data": null,"orderable": false},
+                    {"data": 0},
+                    {"data": 1},
+                    {"data": 2},
+                    {"data": 3},
+                    {"data": 4},
+                    {"data": 5},
+                    {"data": null,"orderable": false}
+                ],
+                "columnDefs": [
+                    {
+                        "targets": 0,
+                        "defaultContent": ' <div class="checkbox"> <label> <input class="colored-blue" name="checkList" type="checkbox"> <span class="text"></span> </label> </div>'
+                    },{
+                        "targets": -1,
+                        "defaultContent": ' <a href="#" class="btn btn-info btn-xs edit"><i class="fa fa-edit"></i> 编辑</a> <a href="#" class="btn btn-danger btn-xs delete"><i class="fa fa-trash-o"></i> 删除</a>'
+                    }
+                ],
+                "order": [[1, 'asc']] // 指定第二列为升序
+            });
+
+            // 新增行
+            function addNewRow(){
+                bootbox.dialog({
+                    message: $("#myModal").html(),
+                    title: "新增用户",
+                    className: "",
+                    buttons: {
+                        success: {
+                            label: "Send",
+                            className: "btn-blue",
+                            callback: function () { }
+                        },
+                        "Save as Draft": {
+                            className: "btn-danger",
+                            callback: function () { }
+                        }
+                    }
+                });
+            }
+
+            // 删除行
+            $('#jsonpdatatable').on("click", 'a.delete', function (e) {
+                e.preventDefault();
+                bootbox.confirm("确定删除这条信息吗?", function (result) {
+                    if (result) {
+                        var nRow = $(this).parents('tr')[0];
+                        //  oTable.fnDeleteRow(nRow);
+
+                        oTable.rows().eq(nRow).remove().draw( false );
+                        alert("Row Has Been Deleted!");
+                    } else {
+                        return false;
+                    }
+                });
+            });
+
+            // 编辑行
+            function editRow(){
+                bootbox.dialog({
+                    message: $("#myModal").html(),
+                    title: "新增用户",
+                    className: "",
+                    buttons: {
+                        success: {
+                            label: "确定",
+                            className: "btn-blue",
+                            callback: function () { }
+                        },
+                        "取消": {
+                            className: "btn-default",
+                            callback: function () { }
+                        }
+                    }
+                });
+            }
+            $('#jsonpdatatable').on("click", 'a.edit', function (e) {
+                e.preventDefault();
+
+                var nRow = $(this).parents('tr')[0];
+
+                editRow();
+            });
+
+
+            oTable.on('draw', function () {
+                //checkbox全选
+                var $checkAll = $('[data-toggle="checkAll"]');
+                var $checkList = $("input[name='checkList']");
+                checkAll($checkAll,$checkList);
+
+                $('#J_tableFootBar').css('display','block');
+            });
+
+            // checkbox全选函数
+            function checkAll($checkAll,$checkList){
+                $checkAll.prop("checked", false);
+                $checkAll.on("change", function () {
+                    if ($(this).prop("checked") === true) {
+                        $checkAll.prop("checked", true);
+                        $checkList.prop("checked", $(this).prop("checked"));
+                    } else {
+                        $checkAll.prop("checked", false);
+                        $checkList.prop("checked", false);
+                    }
+                });
+                $checkList.on("change",function(){
+                    var $checkedList = $checkList.filter(':checked');
+                    var checkboxLen = $checkList.length;
+                    var checkedLen = $checkedList.length;
+                    $checkAll.prop("checked", checkboxLen == checkedLen);
+                });
+            }
         }
     }
 }();
+

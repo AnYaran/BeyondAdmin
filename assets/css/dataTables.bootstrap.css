@@ -279,6 +279,7 @@ div.DTFC_LeftFootWrapper table {
         background-color: #f5f5f5;
     }
 
+    /* 处理中 */
 .dataTables_wrapper .dataTables_processing {
     position: absolute;
     top: 50%;
@@ -290,6 +291,7 @@ div.DTFC_LeftFootWrapper table {
     padding-top: 20px;
     text-align: center;
     font-size: 1.2em;
+    border: 0;
     background-color: white;
     background: -webkit-gradient(linear, left top, right top, color-stop(0%, rgba(255, 255, 255, 0)), color-stop(25%, rgba(255, 255, 255, 0.9)), color-stop(75%, rgba(255, 255, 255, 0.9)), color-stop(100%, rgba(255, 255, 255, 0)));
     background: -webkit-linear-gradient(left, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.9) 25%, rgba(255, 255, 255, 0.9) 75%, rgba(255, 255, 255, 0) 100%);
@@ -300,4 +302,32 @@ div.DTFC_LeftFootWrapper table {
 }
 .dataTables_wrapper .dataTables_processing {
     color: #333;
+}
+
+/* 表格内checkbox样式 */
+.form-inline .table .checkbox input[type=checkbox] {
+    position: absolute;
+}
+.form-inline .table input[type=checkbox]+.text:before, input[type=radio]+.text:before {
+    margin-right: 0;
+}
+
+/* 表格底部工具 -- 按钮样式 */
+.table-footbar {
+    display: none;
+    position: absolute;
+    bottom: 47px;
+}
+.table-footbar .checkbox {
+    margin: 0;
+}
+.table-footbar .checkbox label {
+    padding: 8px;
+}
+.table-footbar .checkbox span:before {
+    margin-left: auto;
+    margin-right: auto;
+}
+.table-footbar .btn {
+    margin-top: 3px;
 }
